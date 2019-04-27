@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DatePicker } from 'antd';
+import './App.css'
 import 'antd/dist/antd.css';
-
-import { simpleAction } from '../actions/simpleAction';
+import { simpleAction } from "../actions/simpleAction";
 
 class App extends Component {
     simpleAction = (event) => {
-        this.props.simpleAction();
+        const { dispatch } = this.props;
+        dispatch(simpleAction(event))
     }
 
     render() {
@@ -17,7 +18,7 @@ class App extends Component {
                 <button onClick={this.simpleAction}>Test redux action</button>
                 <pre>
                  {
-                     JSON.stringify(this.props)
+                     JSON.stringify(this.props.simpleReducer)
                  }
                 </pre>
             </div>
@@ -26,11 +27,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    ...state
+    simpleReducer: state.simpleReducer
 })
 
-const mapDispatchToProps = dispatch => ({
-    simpleAction: () => dispatch(simpleAction())
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
