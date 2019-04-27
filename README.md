@@ -6,7 +6,23 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - redux reducers
 - redux sagas
 
+## Redux structure
 
+```json
+{
+    "task": {
+        "tasks":[
+            {
+                "id":"961bfa41-f1db-4269-84ee-67d9b8c0d6d2",
+                "title":"Do washing",
+                "description":"Put washing into machine",
+                "status":"in_progress",
+                "insertDate":"2008-09-15T15:53:00"
+            }
+        ]
+    }
+}
+```
 
 ## Available Scripts
 
