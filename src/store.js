@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers/index';
+import { rootSaga } from './sagas/index'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -12,11 +13,15 @@ export default function configureStore(initialState={}) {
                 // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
             }) : compose;
 
-    return createStore(
+    const store = createStore(
         rootReducer,
         initialState,
         composeEnhancers(
             applyMiddleware(sagaMiddleware)
         )
     );
+
+    sagaMiddleware.run(rootSaga)
+
+    return store
 }

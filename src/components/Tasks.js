@@ -3,10 +3,17 @@ import Task from './Task';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 import { Layout } from 'antd';
+import {getTasks} from "../actions/task";
 
 const { Content } = Layout;
 
 class Tasks extends Component {
+
+    componentDidMount() {
+        const { dispatch } = this.props
+
+        dispatch(getTasks())
+    }
 
     render() {
         const { tasks } = this.props.task;

@@ -1,16 +1,16 @@
 //Get Tasks
 
-export const getTask = () => ({
-    type: 'GET_TASK'
+export const getTasks = () => ({
+    type: 'GET_TASKS'
 })
 
-export const getTaskSuccess = (response) => ({
-    type: 'GET_TASK_SUCCESS',
+export const getTasksSuccess = (response) => ({
+    type: 'GET_TASKS_SUCCESS',
     response
 })
 
-export const getTaskFailure = (error) => ({
-    type: 'GET_TASK_FAILURE',
+export const getTasksFailure = (error) => ({
+    type: 'GET_TASKS_FAILURE',
     error
 })
 
