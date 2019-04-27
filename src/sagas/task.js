@@ -8,7 +8,7 @@ const ENDPOINT_TASKS = '/tasks'
 
 function* getTasks(action) {
     try {
-        const response = axios.get(HOST+ENDPOINT_TASKS)
+        const response = yield call(axios.get,HOST+ENDPOINT_TASKS)
 
         yield put(getTasksSuccess(response))
     } catch(error) {
@@ -20,4 +20,4 @@ function* taskSaga() {
     yield takeEvery('GET_TASKS',getTasks)
 }
 
-export default taskSaga()
+export default taskSaga
