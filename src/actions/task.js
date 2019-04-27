@@ -21,11 +21,31 @@ export const newTask = (task) => ({
     payload: {task}
 })
 
+export const newTaskSuccess = (response) => ({
+    type: 'NEW_TASK_SUCCESS',
+    response
+})
+
+export const newTaskFailure = (error) => ({
+    type: 'NEW_TASK_FAILURE',
+    error
+})
+
 //Edit Task
 
-export const editTask = (task) => ({
+export const editTask = (id, updateTask) => ({
     type: 'EDIT_TASK',
-    payload: {task}
+    payload: {id, updateTask}
+})
+
+export const editTaskSuccess = (response) => ({
+    type: 'EDIT_TASK_SUCCESS',
+    response
+})
+
+export const editTaskFailure = (error) => ({
+    type: 'EDIT_TASK_FAILURE',
+    error
 })
 
 //Delete Task
@@ -33,4 +53,15 @@ export const editTask = (task) => ({
 export const deleteTask = (id) => ({
     type: 'DELETE_TASK',
     payload: {id}
+})
+
+export const deleteTaskSuccess = (response, id) => ({
+    type: 'DELETE_TASK_SUCCESS',
+    response,
+    id
+})
+
+export const deleteTaskFailure = (error) => ({
+    type: 'DELETE_TASK_FAILURE',
+    error
 })

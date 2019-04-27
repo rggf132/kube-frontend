@@ -27,9 +27,10 @@ export default (state = initialState, action) => {
                 loading: true
             }
         case 'GET_TASKS_SUCCESS':
+            console.log(action)
             return {
                 ...state,
-                tasks: action.response.data.tasks,
+                tasks: action.response.data,
                 loading: false
             }
         case 'GET_TASKS_FAILURE':
@@ -48,7 +49,31 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: true
             }
+        case 'NEW_TASK_SUCCESS':
+            console.log(action)
+            return {
+                ...state,
+                tasks: [...state.tasks, action.response.data],
+                loading: false
+            }
+        case 'NEW_TASK_FAILURE':
+            return {
+                ...state,
+                error: action.error.message,
+                loading: false
+            }
         case 'DELETE_TASK':
+            return {
+                ...state,
+                loading: true
+            }
+        case 'DELETE_TASK_SUCCESS':
+            return {
+                ...state,
+                tasks: state.tasks.filter(task => task.id !== action.id),
+                loading: true
+            }
+        case 'DELETE_TASK_FAILURE':
             return {
                 ...state,
                 loading: true
