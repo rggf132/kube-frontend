@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './App.css';
+import { DatePicker } from 'antd';
+import 'antd/dist/antd.css';
 
-import { simpleAction } from './actions/simpleAction';
+import { simpleAction } from '../actions/simpleAction';
 
 class App extends Component {
     simpleAction = (event) => {
@@ -12,6 +13,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
+                <DatePicker/>
                 <button onClick={this.simpleAction}>Test redux action</button>
                 <pre>
                  {
