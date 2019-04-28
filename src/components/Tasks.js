@@ -59,9 +59,14 @@ class Tasks extends Component {
 
     render() {
         const { tasks } = this.props.task;
+        const { editId } = this.state
+
         return (
             <div>
-                <Button type="primary" onClick={this.showModal}>Add Task</Button>
+                <div style={{position:"fixed",top:5,right:5}}>
+                    <Button type="primary" onClick={this.showModal}>Add Task</Button>
+                </div>
+
                 <AddTaskForm
                     type={"new"}
                     wrappedComponentRef={this.saveFormRef}
@@ -71,6 +76,7 @@ class Tasks extends Component {
                 />
                 <AddTaskForm
                     type={"edit"}
+                    editTask={editId?tasks.find(t => t.id===editId):null}
                     wrappedComponentRef={this.saveFormRef}
                     visible={this.state.editId}
                     onCancel={this.handleEditCancel}

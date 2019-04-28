@@ -9,6 +9,9 @@ class App extends Component {
     render() {
         return (
             <div className="App">
+                <div className="App-header">
+                    Task Application
+                </div>
                 <Tasks/>
             </div>
         );
