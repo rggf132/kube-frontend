@@ -5,7 +5,7 @@ import {deleteTask} from "../actions/task";
 import { connect } from 'react-redux';
 
 class Task extends Component {
-    
+
     deleteTask(id) {
         const { dispatch } = this.props
 
