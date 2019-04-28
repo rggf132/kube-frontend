@@ -12,7 +12,8 @@ steps:
   args:
   - '-c'
   - |
-    [[ "$BRANCH_NAME" == "master" ]] && docker push gcr.io/$PROJECT_ID/kube-frontend:$REVISION_ID || echo "skipping . . ."
+    docker push gcr.io/$PROJECT_ID/kube-frontend:$REVISION_ID
+#    [[ "$BRANCH_NAME" == "master" ]] && docker push gcr.io/$PROJECT_ID/kube-frontend:$REVISION_ID || echo "skipping . . ."
 #- name: 'gcr.io/cloud-builders/kubectl'
 #  args:
 #  - 'set'
