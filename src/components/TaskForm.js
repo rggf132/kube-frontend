@@ -7,17 +7,23 @@ const AddTaskForm = Form.create({ name: 'Add Task' })(
             const { visible, onCancel, onCreate, form, type } = this.props;
             const { getFieldDecorator } = form;
 
+            let title,okText
+
             if(type === 'new') {
-
+                title = "New task"
+                okText = "Add"
             } else if(type === 'edit') {
-
+                title = "Edit task"
+                okText = "Update"
+            } else {
+                throw new Error(`Type ${type} invalid`)
             }
 
             return (
                 <Modal
                     visible={visible}
-                    title="Add new Task"
-                    okText="Add"
+                    title={title}
+                    okText={okText}
                     onCancel={onCancel}
                     onOk={onCreate}
                 >

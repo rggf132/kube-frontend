@@ -11,6 +11,7 @@ const { Content } = Layout;
 class Tasks extends Component {
     state = {
         visible: false,
+        editId: null
     };
 
     componentDidMount() {
@@ -44,6 +45,14 @@ class Tasks extends Component {
         });
     }
 
+    handleEdit = () => {
+
+    }
+
+    handleEditCancel = () => {
+        this.setState({ editId: null });
+    }
+
     saveFormRef = (formRef) => {
         this.formRef = formRef;
     }
@@ -54,16 +63,27 @@ class Tasks extends Component {
             <div>
                 <Button type="primary" onClick={this.showModal}>Add Task</Button>
                 <AddTaskForm
-                    type={"edit"}
+                    type={"new"}
                     wrappedComponentRef={this.saveFormRef}
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
                 />
+                <AddTaskForm
+                    type={"edit"}
+                    wrappedComponentRef={this.saveFormRef}
+                    visible={this.state.editId}
+                    onCancel={this.handleEditCancel}
+                    onCreate={this.handleEdit}
+                />
 
                 <Content style={{ padding: '10px', margin: 'auto', width: '50%' }}>
                     {tasks.map(task => (
-                        <Task key={task.id} task={task}  />
+                        <Task
+                            key={task.id}
+                            task={task}
+                            onEdit={e => this.setState({editId:task.id})}
+                        />
                     ))}
                 </Content>
 
