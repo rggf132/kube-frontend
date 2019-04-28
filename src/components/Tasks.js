@@ -46,7 +46,7 @@ class Tasks extends Component {
     }
 
     handleEdit = () => {
-        const form = this.formRef.props.form;
+        const form = this.formRef2.props.form;
         form.validateFields((err, values) => {
             if (err) {
                 return;
@@ -66,10 +66,6 @@ class Tasks extends Component {
         this.setState({ editId: null });
     }
 
-    saveFormRef = (formRef) => {
-        this.formRef = formRef;
-    }
-
     render() {
         const { tasks } = this.props.task;
         const { editId } = this.state
@@ -82,7 +78,7 @@ class Tasks extends Component {
 
                 <AddTaskForm
                     type={"new"}
-                    wrappedComponentRef={this.saveFormRef}
+                    wrappedComponentRef={formRef => this.formRef = formRef}
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handleCreate}
@@ -90,7 +86,7 @@ class Tasks extends Component {
                 <AddTaskForm
                     type={"edit"}
                     editTask={editId?tasks.find(t => t.id===editId):null}
-                    wrappedComponentRef={this.saveFormRef}
+                    wrappedComponentRef={formRef2 => this.formRef2 = formRef2}
                     visible={this.state.editId}
                     onCancel={this.handleEditCancel}
                     onCreate={this.handleEdit}
