@@ -44,6 +44,20 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: true
             }
+        case 'EDIT_TASK_SUCCESS': {
+            const updatedTask = action.response.data
+
+            return {
+                ...state,
+                loading: false,
+                tasks: state.tasks.map(task => task.id===updatedTask.id?updatedTask:task)
+            }
+        }
+        case 'EDIT_TASK_FAILURE':
+            return {
+                ...state,
+                loading: false
+            }
         case 'NEW_TASK':
             return {
                 ...state,

@@ -3,7 +3,7 @@ import Task from './Task';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 import { Layout, Button } from 'antd';
-import {getTasks, newTask} from "../actions/task";
+import {editTask, getTasks, newTask} from "../actions/task";
 import AddTaskForm from "./TaskForm"
 
 const { Content } = Layout;
@@ -46,7 +46,20 @@ class Tasks extends Component {
     }
 
     handleEdit = () => {
+        const form = this.formRef.props.form;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
 
+            console.log('Received values of form: ', values);
+            const { dispatch } = this.props
+
+            dispatch(editTask(this.state.editId,values))
+
+            form.resetFields();
+            this.setState({ editId: null });
+        });
     }
 
     handleEditCancel = () => {

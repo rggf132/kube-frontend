@@ -1,5 +1,5 @@
 import { call, put, takeEvery, select } from "redux-saga/effects"
-import { getTasksSuccess, getTasksFailure } from "../actions/task"
+import {getTasksSuccess, getTasksFailure, editTaskSuccess, editTaskFailure} from "../actions/task"
 import { newTaskSuccess, newTaskFailure } from "../actions/task"
 import { deleteTaskSuccess, deleteTaskFailure } from "../actions/task"
 import axios from 'axios'
@@ -30,6 +30,18 @@ function* newTask(action) {
     }
 }
 
+function* editTask(action) {
+    const { id, updateTask } = action.payload
+
+    try {
+        const response = yield call(axios.put,HOST+ENDPOINT_TASKS+'/'+id,updateTask)
+
+        yield put(editTaskSuccess(response))
+    } catch(error) {
+        yield put(editTaskFailure(error))
+    }
+}
+
 function* deleteTask(action) {
     const { id } = action.payload
     console.log(id)
@@ -46,6 +58,7 @@ function* taskSaga() {
     yield takeEvery('GET_TASKS',getTasks)
     yield takeEvery('NEW_TASK',newTask)
     yield takeEvery('DELETE_TASK',deleteTask)
+    yield takeEvery('EDIT_TASK',editTask)
 }
 
 export default taskSaga
