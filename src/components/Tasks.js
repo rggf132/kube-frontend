@@ -4,32 +4,19 @@ import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 import { Layout, Button } from 'antd';
 import {getTasks, newTask} from "../actions/task";
-import AddTaskForm from "./AddTaskForm"
+import AddTaskForm from "./TaskForm"
 
 const { Content } = Layout;
-const task = {
-    "title":"Do washing",
-    "description":"Put washing into machine"
-}
 
 class Tasks extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            visible: false
-        }
-    }
+    state = {
+        visible: false,
+    };
 
     componentDidMount() {
         const { dispatch } = this.props
 
         dispatch(getTasks())
-    }
-    buttonPress(task) {
-        const { dispatch } = this.props
-
-        dispatch(newTask(task))
     }
 
     showModal = () => {
@@ -48,6 +35,10 @@ class Tasks extends Component {
             }
 
             console.log('Received values of form: ', values);
+            const { dispatch } = this.props
+
+            dispatch(newTask(values))
+
             form.resetFields();
             this.setState({ visible: false });
         });
@@ -61,8 +52,9 @@ class Tasks extends Component {
         const { tasks } = this.props.task;
         return (
             <div>
-                <Button type="primary" onClick={this.showModal}>New Collection</Button>
+                <Button type="primary" onClick={this.showModal}>Add Task</Button>
                 <AddTaskForm
+                    type={"edit"}
                     wrappedComponentRef={this.saveFormRef}
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
@@ -70,7 +62,6 @@ class Tasks extends Component {
                 />
 
                 <Content style={{ padding: '10px', margin: 'auto', width: '50%' }}>
-                    <Button onClick={this.showModal} type="New Task">Primary</Button>
                     {tasks.map(task => (
                         <Task key={task.id} task={task}  />
                     ))}

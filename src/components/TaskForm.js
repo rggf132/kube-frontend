@@ -3,15 +3,16 @@ import { Modal, Form, Input, Radio, } from 'antd';
 
 const AddTaskForm = Form.create({ name: 'Add Task' })(
     class extends React.Component {
-        state = {
-            value: 1,
-        }
-
         render() {
-            const {
-                visible, onCancel, onCreate, form,
-            } = this.props;
+            const { visible, onCancel, onCreate, form, type } = this.props;
             const { getFieldDecorator } = form;
+
+            if(type === 'new') {
+
+            } else if(type === 'edit') {
+
+            }
+
             return (
                 <Modal
                     visible={visible}
@@ -23,7 +24,7 @@ const AddTaskForm = Form.create({ name: 'Add Task' })(
                     <Form layout="vertical">
                         <Form.Item label="Title">
                             {getFieldDecorator('title', {
-                                rules: [{ required: true, message: 'Please input the title of collection!' }],
+                                rules: [{ required: true, message: 'Please input the title of the task!' }],
                             })(
                                 <Input />
                             )}
@@ -32,11 +33,11 @@ const AddTaskForm = Form.create({ name: 'Add Task' })(
                             {getFieldDecorator('description')(<Input type="textarea" />)}
                         </Form.Item>
                         <Form.Item className="collection-create-form_last-form-item">
-                            {getFieldDecorator('modifier', {
-                                initialValue: 'public',
+                            {getFieldDecorator('status', {
+                                initialValue: '',
                             })(
-                                <Radio.Group value={this.state.value}>
-                                    <Radio defaultChecked={"true"} value={""}>Not Started</Radio>
+                                <Radio.Group>
+                                    <Radio value={""}>Not Started</Radio>
                                     <Radio value={"inProgress"}>In Progress</Radio>
                                     <Radio value={"completed"}>Completed</Radio>
                                 </Radio.Group>
