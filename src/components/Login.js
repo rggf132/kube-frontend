@@ -21,11 +21,11 @@ class Login extends Component {
   render() {
     const { Content } = Layout;
     const { getFieldDecorator } = this.props.form;
-    const { user } = this.props.user;
+    const { user } = this.props;
     console.log(this.props.user);
     return (
       <Content style={{ padding: "10%", margin: "auto", width: "50%" }}>
-        <h1>{user.email}</h1>
+        <p>{JSON.stringify(user.user)}</p>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item>
             {getFieldDecorator("email", {
