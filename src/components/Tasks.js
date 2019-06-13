@@ -1,114 +1,116 @@
-import React, { Component } from 'react';
-import Task from './Task';
-import { connect } from 'react-redux';
-import 'antd/dist/antd.css';
-import { Layout, Button } from 'antd';
-import {editTask, getTasks, newTask} from "../actions/task";
-import AddTaskForm from "./TaskForm"
+import React, { Component } from "react";
+import Task from "./Task";
+import { connect } from "react-redux";
+import "antd/dist/antd.css";
+import { Layout, Button } from "antd";
+import { editTask, getTasks, newTask } from "../actions/task";
+import AddTaskForm from "./TaskForm";
 
 const { Content } = Layout;
 
 class Tasks extends Component {
-    state = {
-        visible: false,
-        editId: null
-    };
+  state = {
+    visible: false,
+    editId: null
+  };
 
-    componentDidMount() {
-        const { dispatch } = this.props
+  componentDidMount() {
+    const { dispatch } = this.props;
 
-        dispatch(getTasks())
-    }
+    let result = dispatch(getTasks());
+    console.log(result);
+  }
 
-    showModal = () => {
-        this.setState({ visible: true });
-    }
+  showModal = () => {
+    this.setState({ visible: true });
+  };
 
-    handleCancel = () => {
-        this.setState({ visible: false });
-    }
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
 
-    handleCreate = () => {
-        const form = this.formRef.props.form;
-        form.validateFields((err, values) => {
-            if (err) {
-                return;
-            }
+  handleCreate = () => {
+    const form = this.formRef.props.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
 
-            console.log('Received values of form: ', values);
-            const { dispatch } = this.props
+      console.log("Received values of form: ", values);
+      const { dispatch } = this.props;
 
-            dispatch(newTask(values))
+      dispatch(newTask(values));
 
-            form.resetFields();
-            this.setState({ visible: false });
-        });
-    }
+      form.resetFields();
+      this.setState({ visible: false });
+    });
+  };
 
-    handleEdit = () => {
-        const form = this.formRef2.props.form;
-        form.validateFields((err, values) => {
-            if (err) {
-                return;
-            }
+  handleEdit = () => {
+    const form = this.formRef2.props.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
 
-            console.log('Received values of form: ', values);
-            const { dispatch } = this.props
+      console.log("Received values of form: ", values);
+      const { dispatch } = this.props;
 
-            dispatch(editTask(this.state.editId,values))
+      dispatch(editTask(this.state.editId, values));
 
-            form.resetFields();
-            this.setState({ editId: null });
-        });
-    }
+      form.resetFields();
+      this.setState({ editId: null });
+    });
+  };
 
-    handleEditCancel = () => {
-        this.setState({ editId: null });
-    }
+  handleEditCancel = () => {
+    this.setState({ editId: null });
+  };
 
-    render() {
-        const { tasks } = this.props.task;
-        const { editId } = this.state
+  render() {
+    const { tasks } = this.props.task;
+    const { editId } = this.state;
 
-        return (
-            <div>
-                <div style={{position:"fixed",top:5,right:5}}>
-                    <Button type="primary" onClick={this.showModal}>Add Task</Button>
-                </div>
+    return (
+      <div>
+        <div style={{ position: "fixed", top: 5, right: 5 }}>
+          <Button type="primary" onClick={this.showModal}>
+            Add Task
+          </Button>
+        </div>
 
-                <AddTaskForm
-                    type={"new"}
-                    wrappedComponentRef={formRef => this.formRef = formRef}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    onCreate={this.handleCreate}
-                />
-                <AddTaskForm
-                    type={"edit"}
-                    editTask={editId?tasks.find(t => t.id===editId):null}
-                    wrappedComponentRef={formRef2 => this.formRef2 = formRef2}
-                    visible={this.state.editId}
-                    onCancel={this.handleEditCancel}
-                    onCreate={this.handleEdit}
-                />
+        <AddTaskForm
+          type={"new"}
+          wrappedComponentRef={formRef => (this.formRef = formRef)}
+          visible={this.state.visible}
+          onCancel={this.handleCancel}
+          onCreate={this.handleCreate}
+        />
+        <AddTaskForm
+          type={"edit"}
+          editTask={editId ? tasks.find(t => t.id === editId) : null}
+          wrappedComponentRef={formRef2 => (this.formRef2 = formRef2)}
+          visible={this.state.editId}
+          onCancel={this.handleEditCancel}
+          onCreate={this.handleEdit}
+        />
 
-                <Content style={{ padding: '10px', margin: 'auto', width: '50%' }}>
-                    {tasks.map(task => (
-                        <Task
-                            key={task.id}
-                            task={task}
-                            onEdit={e => this.setState({editId:task.id})}
-                        />
-                    ))}
-                </Content>
-
-            </div>
-        );
-    }
+        <Content style={{ padding: "10px", margin: "auto", width: "50%" }}>
+          {tasks.map(task => (
+            <Task
+              key={task.id}
+              task={task}
+              onEdit={e => this.setState({ editId: task.id })}
+            />
+          ))}
+        </Content>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
-    task: state.task
-})
+  task: state.task
+});
 
 export default connect(mapStateToProps)(Tasks);
